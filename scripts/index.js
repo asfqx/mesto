@@ -9,6 +9,8 @@ const cardForm = document.forms['new-place'];
 const placeNameInput = cardForm.elements['place-name'];
 const imageInput = cardForm.elements.link;
 const imagePopup = document.querySelector('.popup_type_image');
+const image = document.querySelector('.popup__image');
+const caption = document.querySelector('.popup__caption');
 const closeButtonList = document.querySelectorAll('.popup__close');
 const editForm = document.forms['edit-profile'];
 const nameInput = editForm.elements.name;
@@ -31,11 +33,13 @@ function createCard(card) {
     const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
     const likeButton = cardElement.querySelector('.card__like-button');
     const deleteButton = cardElement.querySelector('.card__delete-button');
+    const imageButton = cardElement.querySelector('.card__image');
 
-    cardElement.querySelector('.card__image').src = card.link;
-    cardElement.querySelector('.card__image').alt = card.name;
+    imageButton.src = card.link;
+    imageButton.alt = card.name;
     cardElement.querySelector('.card__title').textContent = card.name;
     
+    imageButton.addEventListener('click', openImagePopup);
     likeButton.addEventListener('click', likeCard);
     deleteButton.addEventListener('click', deleteCard);
 
@@ -53,6 +57,15 @@ function openModal(popup) {
 
 function closeModal(popup) {
     popup.classList.remove('popup_is-opened');
+}
+
+function openImagePopup(evt) {
+    const cardElement = evt.target.closest('.places__item'); 
+    const title = cardElement.querySelector('.card__title').textContent;
+
+    image.src = evt.target.src;
+    caption.textContent = title;
+    openModal(imagePopup);
 }
 
 function openEditForm() {
