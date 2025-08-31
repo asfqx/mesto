@@ -19,6 +19,9 @@ const profileTitle = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__description');
 const cardButton = document.querySelector('.profile__add-button');
 
+imagePopup.classList.add('popup_is-animated');
+cardPopup.classList.add('popup_is-animated');
+profilePopup.classList.add('popup_is-animated');
 
 function likeCard(evt) {
     evt.target.classList.toggle('card__like-button_is-active');
