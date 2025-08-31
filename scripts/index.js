@@ -6,8 +6,8 @@ const placesList = document.querySelector('.places__list');
 const profilePopup = document.querySelector('.popup_type_edit');
 const cardPopup = document.querySelector('.popup_type_new-card');
 const cardForm = document.forms['new-place'];
-const placeNameInput = cardForm['place-name'];
-const imageInput = cardForm.link;
+const placeNameInput = cardForm.elements['place-name'];
+const imageInput = cardForm.elements.link;
 const imagePopup = document.querySelector('.popup_type_image');
 const closeButtonList = document.querySelectorAll('.popup__close');
 const editForm = document.forms['edit-profile'];
@@ -18,12 +18,26 @@ const profileJob = document.querySelector('.profile__description');
 const cardButton = document.querySelector('.profile__add-button');
 
 
+function likeCard(evt) {
+    evt.target.classList.toggle('card__like-button_is-active');
+}
+
+function deleteCard(evt) {
+    const card = evt.target.closest('li.card');
+    card.remove();
+}
+
 function createCard(card) {
     const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
+    const likeButton = cardElement.querySelector('.card__like-button');
+    const deleteButton = cardElement.querySelector('.card__delete-button');
 
     cardElement.querySelector('.card__image').src = card.link;
     cardElement.querySelector('.card__image').alt = card.name;
     cardElement.querySelector('.card__title').textContent = card.name;
+    
+    likeButton.addEventListener('click', likeCard);
+    deleteButton.addEventListener('click', deleteCard);
 
     return cardElement;
 }
@@ -77,6 +91,7 @@ function handleCardFormSubmit(evt) {
 
     closeModal(cardPopup);
 }
+
 
 editForm.addEventListener('submit', handleProfileFormSubmit); 
 editButton.addEventListener('click', openEditForm);
