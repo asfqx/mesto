@@ -37,9 +37,11 @@
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" name="edit-profile">
-        <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" required>
-        <input type="text" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" required>
+      <form class="popup__form" name="edit-profile" novalidate>
+        <input type="text" name="name" id="name-input" class="popup__input popup__input_type_name" placeholder="Имя" required minlength="2" maxlength="40">
+        <span class="popup__input-error name-input-error" ></span>
+        <input type="text" name="description" id="description-input" class="popup__input popup__input_type_description" placeholder="Занятие" required minlength="2" maxlength="200">
+        <span class="popup__input-error description-input-error" ></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
     </div>
@@ -49,8 +51,10 @@
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
       <form class="popup__form" name="new-place">
-        <input type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required>
-        <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+        <input type="text" name="place-name" id="title-input" class="popup__input popup__input_type_card-name" placeholder="Название" required minlength="2" maxlength="40">
+        <span class="popup__input-error title-input-error" ></span>
+        <input type="url" name="link" id="link-input" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+        <span class="popup__input-error link-input-error" ></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
     </div>
@@ -64,6 +68,9 @@
   </div>
 </div>
 <script src="./scripts/cards.js" type="module"></script>
+<script src="./scripts/card.js" defer type="module"></script>
+<script src="./scripts/modal.js" defer type="module"></script>
+<script src="./scripts/validate.js" defer type="module"></script>
 <script src="./scripts/index.js" defer type="module"></script>
 
 <template id="card-template">
