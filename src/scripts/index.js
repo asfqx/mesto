@@ -1,3 +1,4 @@
+
 const editButton = document.querySelector('.profile__edit-button');
 const placesList = document.querySelector('.places__list');
 const profilePopup = document.querySelector('.popup_type_edit');
@@ -18,6 +19,7 @@ const cardButton = document.querySelector('.profile__add-button');
 const cardTemplate = document.querySelector('#card-template').content;
 const popupList = document.querySelectorAll('.popup__form');
 
+import '../pages/index.css';
 import {createCard} from "./card.js"
 import initialCards from "./cards.js";
 import {closeModal, openModal} from "./modal.js";
