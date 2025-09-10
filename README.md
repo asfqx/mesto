@@ -100,7 +100,7 @@
 ![Редактирование профиля](./src/images/screenshot-edit-profile.png)  
 
 **Попап добавления новой карточки:**  
-![Добавление карточки](./src/images/screenshot-new-card.png)  
+![Добавление карточки](./src/images/screenshot-new-card1.png)  
 
 **Просмотр изображения в попапе:**  
 ![Просмотр изображения](./src/images/screenshot-image-popup.png)  
