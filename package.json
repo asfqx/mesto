@@ -1,0 +1,38 @@
+{
+  "name": "mesto-project",
+  "version": "0.0.1",
+  "description": "Social media",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asfqx/mesto.git"
+  },
+  "author": "asfqx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asfqx/mesto/issues"
+  },
+  "homepage": "https://github.com/asfqx/mesto#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.28.3",
+    "babel-loader": "^10.0.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^7.1.2",
+    "gh-pages": "^6.3.0",
+    "html-webpack-plugin": "^5.6.4",
+    "mini-css-extract-plugin": "^2.9.4",
+    "rimraf": "^6.0.1",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  },
+  "dependencies": {
+    "@babel/core": "^7.28.4"
+  }
+}
