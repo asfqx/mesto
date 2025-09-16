@@ -1,0 +1,7 @@
+.profile__image-container {
+    position: relative;
+    display: inline-block;
+    margin: 0 29px 0 0;
+    border-radius: 50%;
+    overflow: hidden;
+}

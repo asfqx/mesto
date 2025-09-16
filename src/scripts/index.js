@@ -18,21 +18,47 @@ const profileJob = document.querySelector('.profile__description');
 const cardButton = document.querySelector('.profile__add-button');
 const cardTemplate = document.querySelector('#card-template').content;
 const popupList = document.querySelectorAll('.popup__form');
+const profileAvatar = document.querySelector('.profile__image');
+const avatarPopup = document.querySelector('.popup_type_new-avatar');
+const avatarForm = document.forms['avatar'];
+const avatarUrlInput = avatarForm.elements.link;
+const avatarOverlay = document.querySelector('.profile__image-overlay');
+const avatarEditIcon = document.querySelector('.profile__edit-icon');
+const cardSaveButton = cardForm.elements['submit'];
+const avatarSaveButton = cardForm.elements['submit'];
+const profileSaveButton = cardForm.elements['submit'];
 
 import '../pages/index.css';
 import {createCard} from "./card.js"
-import initialCards from "./cards.js";
 import {closeModal, openModal} from "./modal.js";
 import {enableValidation } from "./validate.js";
+import { createCardAPI, getCardsAPI, getUserInfoAPI,setUserInfoAPI, editAvatarAPI} from './api.js';
+
+getUserInfoAPI()
+.then(data => {
+    console.log(data);
+    profileJob.textContent = data.about;
+    profileTitle.textContent = data.name; 
+    profileAvatar.src = data.avatar;
+})
+.catch(error => console.log(error))
 
 imagePopup.classList.add('popup_is-animated');
 cardPopup.classList.add('popup_is-animated');
 profilePopup.classList.add('popup_is-animated');
 
-initialCards.forEach(elem => {
-    const card = createCard(elem);
-    placesList.appendChild(card);
-});
+getCardsAPI().then(cards => {
+    cards.forEach(elem => {
+        const card = createCard(elem);
+        elem.likes.forEach(like => {
+            if (like.name == profileTitle.textContent) {
+                card.querySelector('.card__like-button').classList.add('card__like-button_is-active');
+            }
+        })
+        placesList.appendChild(card);
+    })
+})
+.catch((error) => console.log(error));
 
 function openImagePopup(evt) {
     const cardElement = evt.target.closest('.places__item'); 
@@ -51,11 +77,19 @@ function openEditForm() {
 
 function handleProfileFormSubmit(evt) {
     evt.preventDefault(); 
-
-    profileJob.textContent = jobInput.value;
-    profileTitle.textContent = nameInput.value;
-
-    closeModal(profilePopup);
+    profileSaveButton.textContent = 'Сохранение...'
+    setUserInfoAPI(nameInput.value, jobInput.value)
+    .then(() => {
+        
+        profileJob.textContent = jobInput.value;
+        profileTitle.textContent = nameInput.value;
+    })
+    .catch((error) => console.log(error))
+    .finally(() => {
+        profileSaveButton.textContent = 'Сохранить'
+        closeModal(profilePopup);
+    })
+    
 }
 
 function openCardForm (){
@@ -68,17 +102,45 @@ function openCardForm (){
 
 function handleCardFormSubmit(evt) {
     evt.preventDefault(); 
-
-    const newCard = {
-        name: placeNameInput.value,
-        link: imageInput.value
-    }
-
-    const card = createCard(newCard);
-    placesList.prepend(card);
-
-    closeModal(cardPopup);
+    cardSaveButton.textContent = 'Создание...'
+    createCardAPI(placeNameInput.value, imageInput.value)
+    .then(data => {
+        
+        const card = createCard(data);
+        placesList.prepend(card);
+        
+    })
+    .catch((error) => console.log(error))
+    .finally(() => {
+        cardSaveButton.textContent = 'Создать'
+        closeModal(cardPopup);
+    })
 }
+
+function openAvatarForm() {
+    openModal(avatarPopup);
+    avatarUrlInput.value = profileAvatar.src;
+}
+
+function handleEditAvatar(evt) {
+    evt.preventDefault();
+    avatarSaveButton.textContent = 'Сохранение...'
+    editAvatarAPI(avatarUrlInput.value)
+    .then(() => {
+        
+        profileAvatar.src = avatarUrlInput.value;
+    })
+    .catch((error) => console.log(error))
+    .finally(() => {
+        avatarSaveButton.textContent = 'Сохранить'
+        closeModal(avatarPopup);
+    });
+}
+
+avatarForm.addEventListener('submit', handleEditAvatar); 
+
+avatarOverlay.addEventListener('click', openAvatarForm)
+avatarEditIcon.addEventListener('click', openAvatarForm)
 
 editForm.addEventListener('submit', handleProfileFormSubmit); 
 editButton.addEventListener('click', openEditForm);

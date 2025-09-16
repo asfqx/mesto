@@ -1,0 +1,14 @@
+.profile__image-overlay {
+    background-color: black;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.profile__image-container:hover .profile__edit-icon,
+.profile__image-container:hover .profile__image-overlay {
+    opacity: .8; 
+}
